@@ -1,14 +1,24 @@
 -- Initial database setup script for Agni Backend
 -- This runs automatically when the database is first created
 
+-- Debug: Log that script is running
+\echo 'Starting Agni Backend database initialization...'
+
 -- Create the plpython3u extension for Python integration
 CREATE EXTENSION IF NOT EXISTS plpython3u;
+\echo 'Created plpython3u extension'
+
+-- Ensure agni_user exists (PostgreSQL creates this automatically from environment variables)
+\echo 'Current user: ' || current_user;
+\echo 'Available users:';
+\du
 
 -- Grant necessary permissions to the application user
 GRANT USAGE ON SCHEMA public TO agni_user;
 GRANT CREATE ON SCHEMA public TO agni_user;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO agni_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO agni_user;
+\echo 'Granted permissions to agni_user'
 
 -- Broker Instrument Master Data Schema
 -- Supports multiple brokers, exchanges, and instrument types
@@ -23,6 +33,7 @@ CREATE TABLE IF NOT EXISTS brokers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+\echo 'Created brokers table'
 
 -- Exchanges table
 CREATE TABLE IF NOT EXISTS exchanges (
@@ -34,6 +45,7 @@ CREATE TABLE IF NOT EXISTS exchanges (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+\echo 'Created exchanges table'
 
 -- Instrument types table
 CREATE TABLE IF NOT EXISTS instrument_types (
@@ -45,6 +57,7 @@ CREATE TABLE IF NOT EXISTS instrument_types (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+\echo 'Created instrument_types table'
 
 -- Main instruments table
 CREATE TABLE IF NOT EXISTS instruments (
@@ -95,6 +108,7 @@ CREATE TABLE IF NOT EXISTS instruments (
     UNIQUE(broker_id, instrument_key),
     UNIQUE(broker_id, exchange_id, trading_symbol, instrument_type_id)
 );
+\echo 'Created instruments table'
 
 -- OHLC Data Tables for FNO Analysis
 -- Daily OHLC data table

@@ -18,6 +18,10 @@ RUN python3 -m venv /opt/venv && \
 # Copy initialization scripts directly into the image
 COPY init-scripts/ /docker-entrypoint-initdb.d/
 
+# Debug: Verify scripts are copied
+RUN ls -la /docker-entrypoint-initdb.d/ && \
+    cat /docker-entrypoint-initdb.d/01-init.sql | head -5
+
 # Set environment variables
 ENV PYTHONPATH=/opt/venv/lib/python3.9/site-packages
 ENV PATH="/opt/venv/bin:$PATH"
