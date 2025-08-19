@@ -26,6 +26,8 @@ A comprehensive PostgreSQL database setup with Docker for a financial trading sy
 3. **Select Docker Compose** as deployment method
 4. **Deploy** - Coolify will handle the rest
 
+> **📖 For detailed deployment instructions and troubleshooting, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**
+
 ### 2. Manual Deployment (if needed)
 
 ```bash
